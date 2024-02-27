@@ -17,4 +17,4 @@ class Economy:
         self._infrastructure.enhance()
 
     def collect_taxes(self, citizen: Citizen):
-        self._treasury += citizen.income // 5
+        self._treasury += citizen.income // (20*self._infrastructure.level)
