@@ -1,14 +1,16 @@
 import abc
 
 from src.DAO.repository import Repository
+from input import Input
 
 
 class Command(abc.ABC):
     _name: str = "command"
     _help: str = "Help for this command"
 
-    def __init__(self, repository: Repository):
+    def __init__(self, input_: Input, repository: Repository):
         self._repository = Repository
+        self._args = input_.args
 
     @property
     def name(self):
@@ -18,8 +20,12 @@ class Command(abc.ABC):
     def help(self):
         return self._help
 
-    @abc.abstractmethod
-    def execute(self, *args: str): pass
+    @property
+    def args(self):
+        return self._args.copy()
 
     @abc.abstractmethod
-    def cen_execute(self, *args: str) -> bool: pass
+    def execute(self): pass
+
+    @abc.abstractmethod
+    def can_execute(self, *args: str) -> bool: pass
