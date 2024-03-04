@@ -1,17 +1,17 @@
-from re import match
+import re
 
-from externalPolitics import ExternalPolitics
-from legislation import Legislation
-from government import Government
-from economy import Economy
-from population import Population
+from src.model.legislation import Legislation
+from src.model.government import Government
+from src.model.economy import Economy
+from src.model.population import Population
+from src.model.conditionOfRelationBetweenStates import ConditionOfRelationBetweenStates
 
 
 class State:
-    from citizen import Citizen
+    from src.model.citizen import Citizen
 
     def __init__(self, name: str, head: Citizen):
-        self._name: str = name
+        self.name = name
         self._government: Government = Government(head)
         self._economy: Economy = Economy()
         self._legislation: Legislation = Legislation()
@@ -26,10 +26,11 @@ class State:
 
     @name.setter
     def name(self, value: str):
-        if match(value, r'((([A-Z][a-zA-Z]*) )|of |the )*(([A-Z][a-zA-Z]*))'):
+        pattern = re.compile(r'((([A-Z][a-z]*) )|of |the )*([A-Z][a-z]*)')
+        if pattern.match(value):
             self._name = value
         else:
-            raise ValueError
+            raise ValueError("Invalid name of state")
 
     @property
     def government(self):
@@ -50,3 +51,42 @@ class State:
     @property
     def external_politics(self):
         return self._external_politics
+
+
+class ExternalRelation:
+    def __init__(self, other_state: State, condition: ConditionOfRelationBetweenStates = 1):
+        self._other_state = other_state
+        self._condition = condition
+
+    @property
+    def other_state(self):
+        return self._other_state
+
+    @property
+    def condition(self):
+        return self._condition
+
+    @condition.setter
+    def condition(self, value: ConditionOfRelationBetweenStates):
+        self._condition = value
+
+
+class ExternalPolitics:
+    def __init__(self):
+        self._external_relations = []
+
+    @property
+    def relations(self):
+        return self._external_relations
+
+    def add_external_relation(self, external_relation: ExternalRelation):
+        self._external_relations.append(external_relation)
+
+    def get_external_relation(self, state_: State):
+        try:
+            return filter(lambda x: x.other_state == state_, self._external_relations)[0]
+        except IndexError:
+            raise ValueError()
+
+    def remove_external_relation(self, external_relation: ExternalRelation):
+        self._external_relations.remove(external_relation)

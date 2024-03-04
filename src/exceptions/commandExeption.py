@@ -1,4 +1,4 @@
-from src.controller.command import Command
+from src.controller.commands.command import Command
 
 
 class CommandException(Exception):

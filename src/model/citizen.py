@@ -1,10 +1,11 @@
-from re import match
+import re
 
 
 class Citizen:
 
     def __init__(self, name: str, income: int = 10):
-        if not match(name, r'([A-Z][a-zA-Z]*) ([A-Z][a-zA-Z]*)'):
+        patter = re.compile(r'([A-Z][a-z]* )?([A-Z][a-z]*)')
+        if not patter.match(name):
             raise ValueError("Invalid name")
         self._name = name
         if income <= 0:

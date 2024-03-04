@@ -1,5 +1,5 @@
-from infrastructure import Infrastructure
-from citizen import Citizen
+from src.model.infrastructure import Infrastructure
+from src.model.citizen import Citizen
 
 
 class Economy:
@@ -11,10 +11,16 @@ class Economy:
     def treasury(self):
         return self._treasury
 
+    @property
+    def infrastructure_level(self):
+        return self._infrastructure.level
+
     def enhance_infrastructure(self):
         if self.treasury < self._infrastructure.get_cost_of_enhancing():
-            raise AttributeError
+            raise AttributeError(f"Not enough money to enhance infrastructure. "
+                                 f"You need {self._infrastructure.get_cost_of_enhancing()}")
+        self._treasury -= self._infrastructure.get_cost_of_enhancing()
         self._infrastructure.enhance()
 
     def collect_taxes(self, citizen: Citizen):
-        self._treasury += citizen.income // (20*self._infrastructure.level)
+        self._treasury += (citizen.income * self._infrastructure.level) // 20

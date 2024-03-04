@@ -1,9 +1,13 @@
-from law import Law
+from src.model.law import Law
 
 
 class Legislation:
     def __init__(self):
         self._laws: list[Law] = []
+
+    @property
+    def laws(self):
+        return self._laws
 
     def publish_law(self, law: Law):
         self._laws.append(law)

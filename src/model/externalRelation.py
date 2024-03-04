@@ -1,10 +1,9 @@
-from conditionOfRelationBetweenStates import ConditionOfRelationBetweenStates
+from src.model.conditionOfRelationBetweenStates import ConditionOfRelationBetweenStates
+import src.model.state as state
 
 
 class ExternalRelation:
-    from state import State
-
-    def __init__(self, other_state: State, condition: ConditionOfRelationBetweenStates = 1):
+    def __init__(self, other_state: state.State, condition: ConditionOfRelationBetweenStates = 1):
         self._other_state = other_state
         self._condition = condition
 

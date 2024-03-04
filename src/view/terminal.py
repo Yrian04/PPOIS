@@ -1,5 +1,5 @@
 from src.controller.interpreter import Interpreter
-from inputer import Inputer
+from src.view.inputer import Inputer
 from src.DAO.repository import Repository
 from src.exceptions.commandExeption import CommandException
 
@@ -21,6 +21,6 @@ class Terminal:
         if not command.can_execute():
             raise CommandException(command)
         try:
-            command.execute()
+            return command.execute()
         except Exception as ex:
             raise ex

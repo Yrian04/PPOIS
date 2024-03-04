@@ -1,7 +1,7 @@
 from typing import Callable
 
-from command import Command
-from input import Input
+from src.controller.commands.command import Command
+from src.controller.input import Input
 from src.DAO.repository import Repository
 
 
@@ -13,4 +13,4 @@ class Interpreter:
         try:
             return self._commands[input_.command_name](input_, repository)
         except Exception as ex:
-            raise ex.add_note("Command interpretation error")
+            raise Exception("Command interpretation error")

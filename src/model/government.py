@@ -1,4 +1,4 @@
-from citizen import Citizen
+from src.model.citizen import Citizen
 
 
 class Government:
@@ -6,14 +6,14 @@ class Government:
         self._head: Citizen = head
 
     @property
-    def head(self):
+    def head(self) -> Citizen:
         return self._head
 
     def change_head(self, head: Citizen):
         self._head = head
 
     def provide_security(self, citizen: Citizen):
-        print(f"Security of {citizen.name} is provided thanks {self.head.name}!")
+        return f"Security of {citizen.name} is provided thanks to {self.head.name}!"
 
-    def provided_social_security(self, citizen: Citizen):
-        print(f"Social security of {citizen.name} is provided thanks {self.head.name}!")
+    def provided_social_support(self, citizen: Citizen):
+        return f"Social support of {citizen.name} is provided thanks to {self.head.name}!"
